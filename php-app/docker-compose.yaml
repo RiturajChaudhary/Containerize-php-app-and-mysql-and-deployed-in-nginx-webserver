@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: php-app
+    volumes:
+      - ./app:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - php-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-server
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - php-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: php_app
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: php123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./crud.sql:/docker-entrypoint-initdb.d/crud.sql
+    networks:
+      - php-network
+
+volumes:
+  mysql_data:
+
+networks:
+  php-network:
