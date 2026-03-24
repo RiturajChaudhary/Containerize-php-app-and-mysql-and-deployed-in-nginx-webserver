@@ -1,6 +1,6 @@
 # Containerized PHP Application with MySQL and Nginx
 
-A fully containerized PHP web application connected to a MySQL database and served through Nginx using Docker and Docker Compose. Designed for local development and cloud deployment (e.g., EC2).
+A fully containerized PHP web application connected to a MySQL database and served through Nginx using Docker and Docker Compose using EC2 instance.
 
 ## Project Overview
 
